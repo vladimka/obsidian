@@ -1,0 +1,7 @@
+{
+  "name": "trolleybus-generator",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npx esbuild main.ts --bundle --outfile=main.js --external:obsidian --format=cjs --target=es2018"
+  }
+}

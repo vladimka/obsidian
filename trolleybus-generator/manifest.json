@@ -1,0 +1,9 @@
+{
+  "id": "trolleybus-generator",
+  "name": "Trolleybus Generator",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Генерация страниц троллейбусов из журналов работы",
+  "author": "vladimka",
+  "isDesktopOnly": false
+}

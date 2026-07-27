@@ -1,0 +1,68 @@
+.trolleybus-sidebar {
+  padding: 12px;
+}
+
+.sidebar-header {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sidebar-summary {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 8px;
+  background: var(--background-secondary);
+  border-radius: 6px;
+}
+
+.summary-item {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.summary-item.warning {
+  color: var(--text-warning);
+  font-weight: 600;
+}
+
+.summary-item.danger {
+  color: var(--text-error);
+  font-weight: 600;
+}
+
+.sidebar-section {
+  margin-bottom: 16px;
+}
+
+.sidebar-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-list li {
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.sidebar-list li:last-child {
+  border-bottom: none;
+}
+
+.sidebar-hint {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
