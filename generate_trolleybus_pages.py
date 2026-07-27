@@ -330,6 +330,7 @@ def generate_home(all_numbers, tasks, monitors, informators, report):
     lines.append("- [[Информаторы]] — статус информаторов")
     lines.append("- [[Работники депо]] — контакты")
     lines.append("- [[Лист1]] — отчёт по регистраторам и камерам")
+    lines.append("- [[Старые]] — не проверялись больше недели")
     lines.append("")
 
     with_issues = []
