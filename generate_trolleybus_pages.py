@@ -138,8 +138,8 @@ def parse_report_html(path):
         reg_comment = row[3].strip() if len(row) > 3 else ""
         if not reg_comment and len(row) > 4:
             reg_comment = row[4].strip()
-        driver = row[6].strip() if len(row) > 6 else ""
-        road = row[7].strip() if len(row) > 7 else ""
+        cam_driver = row[6].strip() if len(row) > 6 else ""
+        cam_road = row[7].strip() if len(row) > 7 else ""
         cam1 = row[8].strip() if len(row) > 8 else ""
         cam2 = row[9].strip() if len(row) > 9 else ""
         cam3 = row[10].strip() if len(row) > 10 else ""
@@ -152,13 +152,11 @@ def parse_report_html(path):
         if not mon_comment and len(row) > 17:
             mon_comment = row[17].strip()
 
-        cameras = {"1": cam1, "2": cam2, "3": cam3, "лестница": ladder}
+        cameras = {"водитель": cam_driver, "дорога": cam_road, "1": cam1, "2": cam2, "3": cam3, "лестница": ladder}
 
         data[num] = {
             "registrator": reg_status,
             "registrator_comment": reg_comment,
-            "driver": driver,
-            "road": road,
             "cameras": cameras,
             "cameras_comment": cam_comment,
             "monitor": mon_status,
@@ -184,8 +182,6 @@ def generate_page(
     rep = report_data or {}
     reg_status = rep.get("registrator", "")
     reg_comment = rep.get("registrator_comment", "")
-    driver = rep.get("driver", "")
-    road = rep.get("road", "")
     cameras = rep.get("cameras", {})
     cam_comment = rep.get("cameras_comment", "")
     mon_report = rep.get("monitor", "")
@@ -210,10 +206,6 @@ def generate_page(
     lines.append(f"| Регистратор | {reg_str} |")
     lines.append(f"| Монитор | {monitor_str} |")
     lines.append(f"| Информатор | {informator_str} |")
-    if driver:
-        lines.append(f"| Водитель | {driver} |")
-    if road:
-        lines.append(f"| Дорога | {road} |")
     lines.append("")
 
     comments = []
