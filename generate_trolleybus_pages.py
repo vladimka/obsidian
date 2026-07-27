@@ -11,8 +11,16 @@ VAULT_DIR = Path(__file__).parent
 OUTPUT_DIR = VAULT_DIR / "Троллейбусы"
 
 
+def _clean_status(s):
+    """Убирает артефакты вроде ^d0188e из статуса."""
+    return re.sub(r"\^[a-fA-F0-9]+\s*", "", s).strip()
+
+
 def parse_work_file(path):
-    """Парсит файл Работа.md — извлекает историю носителей и задачи."""
+    """Парсит файл Работа.md — извлекает историю носителей и задачи.
+
+    Формат строки: <номер_троллейбуса> <название_снятого_диска>
+    """
     with open(path, encoding="utf-8") as f:
         lines = f.readlines()
 
@@ -49,9 +57,9 @@ def parse_monitor_file(path):
         content = f.read()
 
     monitors = {}
-    for match in re.finditer(r"(\d+)\.\s+(\d{3})\s+(.*?)$", content, re.MULTILINE):
+    for match in re.finditer(r"(\d+)\.\s+(\d{3})[ \t]+(.*?)$", content, re.MULTILINE):
         num = match.group(2)
-        status_raw = match.group(3).strip()
+        status_raw = _clean_status(match.group(3))
         if status_raw == "+":
             monitors[num] = "+"
         elif status_raw == "-":
@@ -69,9 +77,9 @@ def parse_informator_file(path):
         content = f.read()
 
     informators = {}
-    for match in re.finditer(r"(\d+)\.\s+(\d{3})\s+(.*?)$", content, re.MULTILINE):
+    for match in re.finditer(r"(\d+)\.\s+(\d{3})[ \t]+(.*?)$", content, re.MULTILINE):
         num = match.group(2)
-        status_raw = match.group(3).strip()
+        status_raw = _clean_status(match.group(3))
         if status_raw == "+":
             informators[num] = "+"
         elif "адмирал" in status_raw.lower():
@@ -114,12 +122,7 @@ class _HTMLTableParser(HTMLParser):
 
 
 def parse_report_html(path):
-    """Парсит Лист1.html — извлекает данные о регистраторах, камерах и мониторах.
-
-    Возвращает dict: {номер_троллейбуса: {...}} с полями:
-        registrator, registrator_comment, cameras, cameras_comment,
-        monitor, monitor_comment, driver, road
-    """
+    """Парсит Лист1.html — извлекает данные о регистраторах, камерах и мониторах."""
     with open(path, encoding="utf-8") as f:
         content = f.read()
 
@@ -174,7 +177,7 @@ def get_trolleybus_tasks(tasks, num):
 
 
 def generate_page(
-    num, history_entries, monitor_status, informator_status, tasks, report_data
+    num, history_entries, monitor_status, informator_status, tasks, report_data,
 ):
     """Генерирует содержимое md-файла для троллейбуса."""
     rep = report_data or {}
@@ -182,7 +185,6 @@ def generate_page(
     reg_comment = rep.get("registrator_comment", "")
     cameras = rep.get("cameras", {})
     cam_comment = rep.get("cameras_comment", "")
-    mon_report = rep.get("monitor", "")
     mon_comment = rep.get("monitor_comment", "")
 
     lines = []
@@ -251,10 +253,85 @@ def generate_page(
     lines.append(f"**Текущий носитель:** {current}")
     lines.append("")
 
+    if history_entries:
+        last = sorted(history_entries, key=lambda x: x["date"], reverse=True)[0]
+        lines.append(f"**Последнее снятие:** {last['date']} — «{last['info']}»")
+        lines.append("")
+    else:
+        lines.append("**Последнее снятие:** нет данных")
+        lines.append("")
+
     lines.append("---")
     lines.append(
         "*Сгенерировано автоматически из [[Работа]], [[Мониторы]], [[Информаторы]], [[Лист1]]*"
     )
+
+    return "\n".join(lines)
+
+
+def generate_home(all_numbers, tasks, monitors, informators, report):
+    """Генерирует Home.md — дашборд со ссылками на все троллейбусы."""
+    lines = []
+    lines.append("---")
+    lines.append("tags:")
+    lines.append("  - главная")
+    lines.append("---")
+    lines.append("")
+    lines.append("# Депо троллейбусов")
+    lines.append("")
+
+    lines.append("## Навигация")
+    lines.append("")
+    lines.append("- [[Работа]] — журнал работы")
+    lines.append("- [[Мониторы]] — статус мониторов")
+    lines.append("- [[Информаторы]] — статус информаторов")
+    lines.append("- [[Работники депо]] — контакты")
+    lines.append("- [[Лист1]] — отчёт по регистраторам и камерам")
+    lines.append("")
+
+    with_issues = []
+    for num in sorted(all_numbers, key=lambda x: int(x)):
+        num_tasks = get_trolleybus_tasks(tasks, num)
+        mon = monitors.get(num, "")
+        info = informators.get(num, "")
+        rep = report.get(num, {})
+        reg = rep.get("registrator", "")
+
+        issues = []
+        if num_tasks:
+            issues.append("задачи")
+        if reg and reg != "+":
+            issues.append(f"регистратор: {reg}")
+        if mon and mon != "+" and mon != "Адмирал":
+            issues.append(f"монитор: {mon}")
+        if info and info != "+" and info != "Адмирал" and info != "—":
+            issues.append(f"информатор: {info}")
+        if issues:
+            with_issues.append((num, issues))
+
+    if with_issues:
+        lines.append("## Проблемные")
+        lines.append("")
+        for num, issues in with_issues:
+            lines.append(f"- [[{num}]] — {', '.join(issues)}")
+        lines.append("")
+
+    lines.append("## Все троллейбусы")
+    lines.append("")
+
+    rows_per_line = 8
+    nums_sorted = sorted(all_numbers, key=lambda x: int(x))
+    for i in range(0, len(nums_sorted), rows_per_line):
+        chunk = nums_sorted[i:i + rows_per_line]
+        line = " | ".join(f"[[{n}]]" for n in chunk)
+        lines.append(line)
+    lines.append("")
+
+    lines.append(f"**Всего:** {len(all_numbers)} троллейбусов")
+    lines.append("")
+
+    lines.append("---")
+    lines.append("*Обновляется автоматически скриптом [[generate_trolleybus_pages]]*")
 
     return "\n".join(lines)
 
@@ -292,6 +369,11 @@ def main():
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(page)
         print(f"  Создан: {num}.md")
+
+    home = generate_home(all_numbers, tasks, monitors, informators, report)
+    with open(VAULT_DIR / "Home.md", "w", encoding="utf-8") as f:
+        f.write(home)
+    print(f"  Обновлён: Home.md")
 
     print(f"\nГотово! Создано {len(all_numbers)} файлов в {OUTPUT_DIR}")
 
