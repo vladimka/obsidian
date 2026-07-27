@@ -4,11 +4,13 @@
 import os
 import re
 from collections import defaultdict
+from datetime import datetime, timedelta
 from html.parser import HTMLParser
 from pathlib import Path
 
 VAULT_DIR = Path(__file__).parent
 OUTPUT_DIR = VAULT_DIR / "Троллейбусы"
+STALE_DAYS = 7
 
 
 def _clean_status(s):
@@ -241,25 +243,11 @@ def generate_page(
         lines.append("")
 
     if history_entries:
-        lines.append("## История носителей")
-        lines.append("")
-        lines.append("| Дата | Носитель |")
-        lines.append("|------|----------|")
-        for entry in sorted(history_entries, key=lambda x: x["date"], reverse=True):
-            lines.append(f"| {entry['date']} | {entry['info']} |")
-        lines.append("")
-
-    current = history_entries[0]["info"] if history_entries else "нет данных"
-    lines.append(f"**Текущий носитель:** {current}")
-    lines.append("")
-
-    if history_entries:
         last = sorted(history_entries, key=lambda x: x["date"], reverse=True)[0]
         lines.append(f"**Последнее снятие:** {last['date']} — «{last['info']}»")
-        lines.append("")
     else:
         lines.append("**Последнее снятие:** нет данных")
-        lines.append("")
+    lines.append("")
 
     lines.append("---")
     lines.append(
