@@ -145,8 +145,6 @@ def parse_report_html(path):
         cam3 = row[10].strip() if len(row) > 10 else ""
         ladder = row[11].strip() if len(row) > 11 else ""
         cam_comment = row[13].strip() if len(row) > 13 else ""
-        if not cam_comment and len(row) > 14:
-            cam_comment = row[14].strip()
         mon_status = row[15].strip() if len(row) > 15 else ""
         mon_comment = row[16].strip() if len(row) > 16 else ""
         if not mon_comment and len(row) > 17:
