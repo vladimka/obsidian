@@ -257,6 +257,61 @@ def generate_page(
     return "\n".join(lines)
 
 
+def _parse_date(d):
+    """Парсит дату DD.MM в текущем году."""
+    return datetime.strptime(f"{d}.2026", "%d.%m.%Y")
+
+
+def generate_stale_page(history):
+    """Генерирует страницу троллейбусов, которые не снимали больше недели."""
+    today = datetime.now()
+    cutoff = today - timedelta(days=STALE_DAYS)
+
+    stale = []
+    no_data = []
+
+    for num in sorted(history.keys(), key=lambda x: int(x)):
+        entries = history[num]
+        last = sorted(entries, key=lambda x: x["date"], reverse=True)[0]
+        try:
+            last_date = _parse_date(last["date"])
+            if last_date < cutoff:
+                days = (today - last_date).days
+                stale.append((num, last["date"], days, last["info"]))
+        except ValueError:
+            no_data.append(num)
+
+    lines = []
+    lines.append("---")
+    lines.append("tags:")
+    lines.append("  - старые")
+    lines.append("---")
+    lines.append("")
+    lines.append("# Не проверялись больше недели")
+    lines.append("")
+    lines.append(f"*Сгенерировано: {today.strftime('%d.%m.%Y')}*")
+    lines.append("")
+
+    if stale:
+        lines.append(f"| Троллейбус | Дата | Дней | Диск |")
+        lines.append(f"|------------|------|------|------|")
+        for num, date, days, info in stale:
+            lines.append(f"| [[{num}]] | {date} | {days} | {info} |")
+        lines.append("")
+    else:
+        lines.append("Все троллейбусы проверены за последнюю неделю.")
+        lines.append("")
+
+    if no_data:
+        lines.append(f"**Нет данных:** {', '.join(f'[[{n}]]' for n in no_data)}")
+        lines.append("")
+
+    lines.append("---")
+    lines.append("*Обновляется автоматически скриптом [[generate_trolleybus_pages]]*")
+
+    return "\n".join(lines)
+
+
 def generate_home(all_numbers, tasks, monitors, informators, report):
     """Генерирует Home.md — дашборд со ссылками на все троллейбусы."""
     lines = []
@@ -362,6 +417,11 @@ def main():
     with open(VAULT_DIR / "Home.md", "w", encoding="utf-8") as f:
         f.write(home)
     print(f"  Обновлён: Home.md")
+
+    stale = generate_stale_page(history)
+    with open(VAULT_DIR / "Старые.md", "w", encoding="utf-8") as f:
+        f.write(stale)
+    print(f"  Создан: Старые.md")
 
     print(f"\nГотово! Создано {len(all_numbers)} файлов в {OUTPUT_DIR}")
 
