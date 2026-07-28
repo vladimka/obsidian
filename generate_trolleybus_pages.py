@@ -243,7 +243,7 @@ def generate_page(
         lines.append("")
 
     if history_entries:
-        last = sorted(history_entries, key=lambda x: x["date"], reverse=True)[0]
+        last = sorted(history_entries, key=lambda x: _parse_date(x["date"]), reverse=True)[0]
         lines.append(f"**Последнее снятие:** {last['date']} — «{last['info']}»")
     else:
         lines.append("**Последнее снятие:** нет данных")
@@ -272,7 +272,7 @@ def generate_stale_page(history):
 
     for num in sorted(history.keys(), key=lambda x: int(x)):
         entries = history[num]
-        last = sorted(entries, key=lambda x: x["date"], reverse=True)[0]
+        last = sorted(entries, key=lambda x: _parse_date(x["date"]), reverse=True)[0]
         try:
             last_date = _parse_date(last["date"])
             if last_date < cutoff:
