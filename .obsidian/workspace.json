@@ -1,0 +1,247 @@
+{
+  "main": {
+    "id": "6600fcb037f5292a",
+    "type": "split",
+    "children": [
+      {
+        "id": "5fbe44e40831c9af",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "960e3f545b47ff49",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Граф"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "972721058bb71989",
+    "type": "split",
+    "children": [
+      {
+        "id": "498debdd68ce63ae",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "197f794063203513",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "fc02cb4037bae06d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "b1b91011f906afb7",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "6897d0bdcaf97515",
+    "type": "split",
+    "children": [
+      {
+        "id": "6df4fc327a6b2585",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a6efa5b87d642fca",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "ЭЭЭЭ.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для ЭЭЭЭ"
+            }
+          },
+          {
+            "id": "ee5e98916af97d39",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "ЭЭЭЭ.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из ЭЭЭЭ"
+            }
+          },
+          {
+            "id": "262c37017c677660",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "3422a65eac0c967c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Все свойства"
+            }
+          },
+          {
+            "id": "bddaecf22011c433",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "ЭЭЭЭ.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура ЭЭЭЭ"
+            }
+          },
+          {
+            "id": "3e7cc4bcdbc94901",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Граф"
+            }
+          },
+          {
+            "id": "411bed18f39dcbbf",
+            "type": "leaf",
+            "state": {
+              "type": "trolleybus-sidebar",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "trolleybus-sidebar"
+            }
+          }
+        ],
+        "currentTab": 6
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false,
+      "obsidian-importer:Open Importer": false,
+      "markdown-importer:Импорт Markdown-файлов": false,
+      "fit:Sync to GitHub": false
+    }
+  },
+  "active": "960e3f545b47ff49",
+  "lastOpenFiles": [
+    "Google Keep/Работа.md",
+    "update.ps1",
+    "AGENTS.md",
+    "Home.md",
+    "Google Keep/Работники депо.md",
+    "Старые.md",
+    "Троллейбусы/312.md",
+    "Троллейбусы/268.md",
+    "Троллейбусы/340.md",
+    "Регистраторы_камеры/resources/sheet.css",
+    "Регистраторы_камеры/Лист1.html",
+    "Регистраторы_камеры/resources",
+    "Регистраторы_камеры",
+    "Регистраторы_камеры.zip",
+    "Не подтвержден 700996.crdownload",
+    "Троллейбусы/277.md",
+    "Отчёт о состоянии подвижного состава.md",
+    "Троллейбусы/339.md",
+    "Троллейбусы/338.md",
+    "Троллейбусы/337.md",
+    "Троллейбусы/336.md",
+    "Троллейбусы/335.md",
+    "Троллейбусы/334.md",
+    "Троллейбусы/333.md",
+    "Троллейбусы/332.md",
+    "Троллейбусы/331.md",
+    "Троллейбусы/330.md",
+    "Троллейбусы/329.md",
+    "Троллейбусы/328.md",
+    "Троллейбусы/327.md",
+    "Троллейбусы/326.md",
+    "Троллейбусы/325.md",
+    "Троллейбусы",
+    "generate_trolleybus_pages.py",
+    "_fit",
+    "Без названия.canvas"
+  ]
+}

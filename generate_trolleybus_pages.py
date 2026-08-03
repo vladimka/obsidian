@@ -2,9 +2,15 @@
 """Скрипт для анализа md-файлов и создания отдельных страниц для каждого троллейбуса."""
 
 import re
+import sys
 from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except AttributeError:
+    pass
 
 VAULT_DIR = Path(__file__).parent
 OUTPUT_DIR = VAULT_DIR / "Троллейбусы"
